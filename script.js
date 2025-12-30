@@ -12,6 +12,7 @@ fetch("data.json")
 
     document.getElementById("github").href = data.links.github;
     document.getElementById("resume").href = data.links.resume;
+    document.getElementById("linkedin").href = data.links.linkedin;
 
     document.getElementById("education-text").textContent = data.education;
 
