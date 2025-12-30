@@ -1,0 +1,73 @@
+{ 
+  "name": "Hi, I am Shivendra Singh 👋",
+  "title": "Software & Computer Vision Engineer (ECE)",
+  "tagline": "C++ | DSA | Python | OpenCV | Frontend Development",
+  "about": "I am an undergraduate student pursuing a B.Tech in Electronics and Communication Engineering at IIITDM Jabalpur, with a strong focus on computer science and software development. I actively practice Data Structures and Algorithms in C++ through competitive programming, which has strengthened my problem-solving skills and analytical thinking. Alongside this, I work as a frontend developer using HTML, CSS, Tailwind CSS, and JavaScript, and I am currently learning backend development to build full-stack applications. I also have a keen interest in AI and Machine Learning, with hands-on experience in basic ML concepts and libraries such as NumPy, Pandas, Matplotlib, and OpenCV. My background in ECE allows me to approach problems with a blend of hardware understanding and software engineering principles, and I am driven by continuous learning and building efficient, real-world solutions.",
+
+  "links": {
+    "github": "https://github.com/SHIV24116",
+    "linkedin": "https://www.linkedin.com/in/shivendra-singh-93631b324",
+    "instagram": "https://www.instagram.com/shivendrasingh731?igsh=MWh3Y3h1ZGFjcXkyaw==",
+    "email": "singhshivendra1945@gmail.com",
+    "resume": "assets/resume.pdf"
+  },
+
+  "skills": {
+    "programming": ["C++", "Python", "JavaScript", "DSA (C++)"],
+    "web": ["HTML", "CSS", "Tailwind CSS", "JavaScript"],
+    "ai_ml": ["OpenCV", "NumPy", "Pandas", "Matplotlib", "Basic ML"],
+    "tools": ["Git", "GitHub", "MATLAB", "Simulink"],
+    "ece": ["Arduino", "ESP Modules"]
+  },
+
+  "projects": [
+    {
+      "title": "My Portfolio Webpage",
+      "description": "Built a responsive and dynamic portfolio website with modular architecture, enabling easy content updates and showcasing projects, skills, and achievements using modern frontend technologies.",
+      "tech": ["HTML", "Tailwind CSS", "Javascript"],
+      "link": "https://github.com/SHIV24116/My-Portfolio-Webpage"
+    },
+    {
+      "title": "AI Posture Guide",
+      "description": "AI Posture Guide is a real-time computer vision system that detects and analyzes human posture using a camera feed. It identifies incorrect postures such as slouching and neck bending and provides instant feedback to help users maintain proper posture.",
+      "tech": ["Python", "Open CV", "MediaPipe Pose" ,"Scikit-Learn","Numpy","Pandas"],
+      "link": "https://github.com/SHIV24116/AI-ML-project-1"
+    },
+    {
+      "title": "Quick Teams Webapp",
+      "description": "Quick Teams is a web application designed to help hackathon participants quickly find and form ideal teams using skill-based matching. It enables users to create profiles, manage availability, send connection requests, and automatically form team groups, providing a smooth and clutter-free collaboration experience for events and hackathons.",
+      "tech": ["HTML", "CSS", "Javascript","Flask","SQLAlchemy"],
+      "link": "https://github.com/SHIV24116/Quick-Teams-web-app"
+    }
+  ],
+
+  "education": {
+    "degree": "B.Tech in Electronics & Communication Engineering",
+    "college": "IIITDM Jabalpur",
+    "duration": "2024 – 2028"
+  },
+  "competitiveProgramming": {
+    "summary": "I actively practice Data Structures & Algorithms and participate in online coding contests.",
+    "totalProblemsSolved": "340+",
+    "totalContests": "60+",
+    "platforms": [
+    {
+      "name": "LeetCode",
+      "link": "https://leetcode.com/u/CeMWZ8BV96/",
+      "maxRating": "NA"
+    },
+    {
+      "name": "Codeforces",
+      "link": "https://codeforces.com/profile/singhshivendra1945",
+      "maxRating": "1078"
+    },
+    {
+      "name": "CodeChef",
+      "link": "https://www.codechef.com/users/band_mellow_74",
+      "maxRating": "1419 ⭐⭐"
+    }
+  ]
+  }
+
+
+}
