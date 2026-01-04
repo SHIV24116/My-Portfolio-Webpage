@@ -6,7 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
       document.title = data.name;
       // Name (typewriter)
       const nameEl = document.getElementById("name");
-      if (nameEl) typeWriter(nameEl, data.name, 90);
+      if (nameEl) {
+        typeWriterSequence(
+          nameEl,
+          [
+          data.name,                 // from JSON
+          "Welcome to my Portfolio"  // second line
+          ]
+        );
+      }
       // Hero content
       const titleEl = document.getElementById("title");
       const taglineEl = document.getElementById("tagline");
@@ -178,17 +186,45 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 /* ================= UTILITIES ================= */
-function typeWriter(element, text, speed = 80) {
-  let index = 0;
+function typeWriterSequence(
+  element,
+  texts,
+  typingSpeed = 80,
+  erasingSpeed = 50,
+  pauseAfterType = 1000,
+  pauseAfterErase = 500
+) {
+  let textIndex = 0;
+  let charIndex = 0;
+  let isTyping = true;
   element.textContent = "";
-  function type() {
-    if (index < text.length) {
-      element.textContent += text.charAt(index++);
-      setTimeout(type, speed);
+  function animate() {
+    const currentText = texts[textIndex];
+    if (isTyping) {
+      if (charIndex < currentText.length) {
+        element.textContent += currentText.charAt(charIndex++);
+        setTimeout(animate, typingSpeed);
+      } else {
+        setTimeout(() => {
+          isTyping = false;
+          animate();
+        }, pauseAfterType);
+      }
+    } else {
+      if (charIndex > 0) {
+        element.textContent = currentText.substring(0, --charIndex);
+        setTimeout(animate, erasingSpeed);
+      } else {
+        textIndex = (textIndex + 1) % texts.length;
+        isTyping = true;
+        setTimeout(animate, pauseAfterErase);
+      }
     }
   }
-  type();
+  animate();
 }
+
+
 function getSkillIcon(skill) {
   const map = {
     "C++": "devicon-cplusplus-plain colored",
