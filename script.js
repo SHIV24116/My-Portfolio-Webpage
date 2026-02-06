@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (resume) resume.href = data.links.resume;
         if (linkedin) linkedin.href = data.links.linkedin;
       }
+      
       /* ================= SKILLS ================= */
       const skillsContainer = document.getElementById("skills-container");
       if (skillsContainer && data.skills) {

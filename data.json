@@ -38,6 +38,12 @@
       "description": "Quick Teams is a web application designed to help hackathon participants quickly find and form ideal teams using skill-based matching. It enables users to create profiles, manage availability, send connection requests, and automatically form team groups, providing a smooth and clutter-free collaboration experience for events and hackathons.",
       "tech": ["HTML", "CSS", "Javascript","Flask","SQLAlchemy"],
       "link": "https://github.com/SHIV24116/Quick-Teams-web-app"
+    },
+    {
+      "title": "Amazon Homepage Clone",
+      "description": "A frontend-only clone of the Amazon website, created as one of my starting projects in my frontend journey trying and testing my HTML and CSS skills .This project focuses on layout, styling, and visual structure — no backend or real functionality.",
+      "tech": ["HTML", "CSS"],
+      "link": "https://github.com/SHIV24116/Amazon-homepage-clone"
     }
   ],
 
@@ -48,13 +54,13 @@
   },
   "competitiveProgramming": {
     "summary": "I actively practice Data Structures & Algorithms and participate in online coding contests.",
-    "totalProblemsSolved": "340+",
+    "totalProblemsSolved": "500+",
     "totalContests": "60+",
     "platforms": [
     {
       "name": "LeetCode",
       "link": "https://leetcode.com/u/CeMWZ8BV96/",
-      "maxRating": "NA"
+      "maxRating": "1608"
     },
     {
       "name": "Codeforces",
@@ -64,7 +70,7 @@
     {
       "name": "CodeChef",
       "link": "https://www.codechef.com/users/band_mellow_74",
-      "maxRating": "1419 ⭐⭐"
+      "maxRating": "1509 ⭐⭐"
     }
   ]
   }
