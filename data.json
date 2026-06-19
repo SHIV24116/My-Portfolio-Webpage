@@ -14,9 +14,9 @@
 
   "skills": {
     "programming": ["C++", "Python", "JavaScript", "DSA (C++)"],
-    "web": ["HTML", "CSS", "Tailwind CSS", "JavaScript"],
+    "web": ["HTML", "CSS", "Tailwind CSS", "JavaScript","React","Node.js","Express.js","MongoDB","Mongoose"],
     "ai_ml": ["OpenCV", "NumPy", "Pandas", "Matplotlib", "Basic ML"],
-    "tools": ["Git", "GitHub", "MATLAB", "Simulink"],
+    "tools": ["Git", "GitHub","VS Code", "MATLAB", "Simulink"],
     "ece": ["Arduino", "ESP Modules"]
   },
 
@@ -26,6 +26,18 @@
       "description": "Built a responsive and dynamic portfolio website with modular architecture, enabling easy content updates and showcasing projects, skills, and achievements using modern frontend technologies.",
       "tech": ["HTML", "Tailwind CSS", "Javascript"],
       "link": "https://github.com/SHIV24116/My-Portfolio-Webpage"
+    },
+    {
+      "title": "MegaBlog",
+      "description": "A full-stack blogging platform that enables users to create, edit, publish, and manage blogs with rich-text formatting and featured image support. The application includes secure authentication, state management, responsive UI, and cloud-based backend services for seamless content management.",
+      "tech": ["React", "Redux Toolkit", "JavaScript", "Tailwind CSS", "Appwrite", "TinyMCE"],
+      "link": "https://github.com/SHIV24116/Learning_React/tree/main/12MegaProject"
+    },
+    {
+      "title": "Radar-Based Motion Detection & Object Classification System",
+      "description": "An intelligent radar-based system designed to detect motion, estimate object distance and speed, and classify moving objects using machine learning techniques. The system processes radar signals, extracts meaningful features, and performs real-time object classification for surveillance and smart sensing applications.",
+      "tech": ["Python", "Machine Learning", "CDM324 radar sensor", "ESP32", "Radar Signal Processing"],
+      "link": "https://github.com/SHIV24116/ML-based-Radar-System"
     },
     {
       "title": "AI Posture Guide",
@@ -54,7 +66,7 @@
   },
   "competitiveProgramming": {
     "summary": "I actively practice Data Structures & Algorithms and participate in online coding contests.",
-    "totalProblemsSolved": "500+",
+    "totalProblemsSolved": "600+",
     "totalContests": "60+",
     "platforms": [
     {
@@ -65,7 +77,7 @@
     {
       "name": "Codeforces",
       "link": "https://codeforces.com/profile/singhshivendra1945",
-      "maxRating": "1078"
+      "maxRating": "1316"
     },
     {
       "name": "CodeChef",
