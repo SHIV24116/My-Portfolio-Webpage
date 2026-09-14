@@ -1,6 +1,6 @@
-# 🚀 Shivendra Singh – Portfolio Website
+# 🚀 Shivendra Singh – Portfolio Website & Admin CMS
 
-A modern, responsive, and interactive **personal portfolio website** built to showcase my skills, projects, and journey as an engineering student with a strong focus on **Computer Science and Software Development**.
+A modern, responsive, and interactive **Software Engineer & AI Engineer personal portfolio website** with a client-side **Admin CMS (Content Management System)** built to showcase skills, GitHub projects, achievements, and competitive programming milestones.
 
 🔗 **Live Website:**  
 👉 https://shiv24116.github.io/My-Portfolio-Webpage/
@@ -9,81 +9,73 @@ A modern, responsive, and interactive **personal portfolio website** built to sh
 
 ## 📌 About the Project
 
-This portfolio is designed as a **single-page, scrollable web application** with a clean dark UI, subtle animations, and data-driven content.  
-The key idea behind this project is **easy future updates** — most content is managed via a JSON file, so new projects, skills, or achievements can be added without modifying the core HTML or JavaScript.
+This portfolio is designed as a **single-page, scrollable web application** with a clean dark UI, subtle animations, and dynamic data-driven content.
+
+### ⚙️ Built-In Admin CMS (`admin.html`)
+The website features an **Admin CMS Panel** that allows you to easily edit and update all contents displayed on the website — including About Me, Profile Photo (with file upload or URL), Projects (Add/Edit/Delete/Reorder), Skills, Achievements, Ratings, and Education — without touching any source code!
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-- ⚡ Modern UI with dark theme, glow effects, and smooth hover animations  
-- 🧠 JSON-based content management (easy updates, no hardcoding)  
-- 🖥️ Fully responsive design (mobile, tablet, desktop)  
-- ⌨️ Typewriter animation in the hero section  
-- 🎯 Active navbar highlighting based on scroll position  
-- 💼 Project showcase with clean card layout  
-- 🧩 Skills section with categorized tech stack and icons  
-- 🏆 Competitive programming section with stats and platform profiles  
-- 📋 Copy-to-clipboard functionality for email and phone  
-- 🌐 Deployed using GitHub Pages  
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-- HTML5  
-- CSS3  
-- Tailwind CSS  
-- JavaScript (Vanilla JS)
-
-### Tools & Platforms
-- Git & GitHub  
-- JSON (data-driven content)  
-- GitHub Pages (deployment)
+- ⚡ **Modern Dark UI**: Radial dot grid background, glowing hover borders, smooth animations, and tailored color palette.
+- ⚙️ **Password-Protected Admin CMS (`admin.html`)**: Simple client-side password matching system (default: `admin123`, fully customizable in Admin settings).
+- 👤 **Dynamic Profile Photo Upload**: Upload image files directly or paste image URLs in the Admin panel.
+- 🚀 **GitHub Projects Showcase**: Full CRUD interface for projects. Includes tech badges, descriptions, and direct GitHub links.
+- 🏆 **Achievements & Highlights Section**: Showcases hackathon recognitions, problem-solving milestones, and technical awards.
+- ⚡ **Competitive Programming Tracker**: Problem count, contest count, and platform ratings (LeetCode, Codeforces, CodeChef).
+- 💾 **Instant Live Persistence**: Edits save to browser `localStorage` for immediate live preview.
+- 📥 **1-Click Export `data.json`**: Download updated JSON files to commit directly to your GitHub repository for permanent GitHub Pages deployment.
+- 🌐 **GitHub Pages Deployed**: Fully static host compatible.
 
 ---
 
-## 🧠 How It Works
+## 🧠 File Structure & Architecture
 
-- **index.html** → Page structure and layout  
-- **script.js** → Dynamic rendering, animations, and interactions  
-- **data.json** → Editable content (projects, skills, links, education, etc.)  
-- **assets/** → Images, logos, and resume  
-
-Updating content is as simple as editing `data.json` and committing the change.
-
----
-
-## 🚀 Deployment
-
-The website is deployed using **GitHub Pages**.
-
-### Deployment Steps:
-1. Push the project to a public GitHub repository  
-2. Go to **Settings → Pages**  
-3. Select `main` branch and `/root` folder  
-4. GitHub automatically builds and deploys the site  
+- `index.html` → Main portfolio page layout and sections
+- `admin.html` → Password-protected Admin Content Management System (CMS)
+- `script.js` → Dynamic renderer, animations, local storage persistence, and scroll handling
+- `data.json` → Master JSON file storing all portfolio content (projects, skills, links, education, achievements)
+- `assets/` → Images, logos, profile photo, and resume PDF
 
 ---
 
-## 📱 Responsive Design
+## 🔑 Admin CMS Guide
 
-The portfolio is optimized for:
-- ✅ Mobile devices  
-- ✅ Tablets  
-- ✅ Desktop screens  
+1. Open `admin.html` in your browser (or click the **⚙️ Admin CMS** link in the navbar/footer).
+2. Enter the Admin Password (Default: `admin123`).
+3. Use the tabs to edit:
+   - **👤 Basic & Contact Info**: Edit name, title, tagline, about text, profile photo, social links.
+   - **🚀 Projects CRUD**: Add new projects, edit existing ones, delete, or reorder.
+   - **🛠️ Skills Manager**: Add/remove skill tags or create new skill categories.
+   - **🏆 Achievements & CP Ratings**: Manage achievements and update contest stats.
+   - **🎓 Education**: Update degree details.
+   - **🔑 Admin Password**: Change password for access control.
+4. Click **💾 Save Changes** to update the site immediately on your browser.
+5. Click **📥 Export data.json** to download the updated JSON file.
+6. Overwrite `Portfolio/data.json` with the downloaded file and push to GitHub to publish changes globally on GitHub Pages!
 
-Layouts and spacing adapt seamlessly across screen sizes.
+---
+
+## 🚀 Deployment to GitHub Pages
+
+1. Push your updated code and `data.json` to GitHub:
+   ```bash
+   git add .
+   git commit -m "Update portfolio content & add Admin CMS"
+   git push origin main
+   ```
+2. GitHub Pages will automatically build and host the updated portfolio at `https://shiv24116.github.io/My-Portfolio-Webpage/`.
 
 ---
 
 ## 📬 Contact
 
 **Shivendra Singh**  
-📧 Email: Available on the website  
-💼 LinkedIn: Available on the website  
-📸 Instagram: Available on the website  
+📧 Email: singhshivendra1945@gmail.com  
+💼 LinkedIn: https://www.linkedin.com/in/shivendra-singh-93631b324  
+📸 Instagram: https://www.instagram.com/shivendrasingh731  
+💻 GitHub: https://github.com/SHIV24116  
 
 ---
 

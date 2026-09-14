@@ -1,91 +1,130 @@
-{ 
+{
   "name": "Hi! I am Shivendra Singh 👋",
-  "title": "Software & Computer Vision Engineer (ECE)",
-  "tagline": "C++ | DSA | Python | OpenCV | Frontend Development",
-  "about": "I am an undergraduate student pursuing a B.Tech in Electronics and Communication Engineering at IIITDM Jabalpur, with a strong focus on computer science and software development. I actively practice Data Structures and Algorithms in C++ through competitive programming, which has strengthened my problem-solving skills and analytical thinking. Alongside this, I work as a frontend developer using HTML, CSS, Tailwind CSS, and JavaScript, and I am currently learning backend development to build full-stack applications. I also have a keen interest in AI and Machine Learning, with hands-on experience in basic ML concepts and libraries such as NumPy, Pandas, Matplotlib, and OpenCV. My background in ECE allows me to approach problems with a blend of hardware understanding and software engineering principles, and I am driven by continuous learning and building efficient, real-world solutions.",
-
+  "title": "Software Engineer & AI Engineer",
+  "tagline": "Full-Stack Web Development | AI Systems | ML | MERN | C++ DSA | JavaScript | Python | FastAPI",
+  "profilePhoto": "assets/profilephoto.jpeg",
+  "about": "I am an undergraduate student pursuing a B.Tech in Electronics and Communication Engineering at IIITDM Jabalpur, dedicated to building scalable software systems and intelligent AI applications. I have a strong foundation in Data Structures and Algorithms in C++, actively practicing competitive programming to solve complex computational problems. My technical expertise spans modern full-stack development using React, Next.js, Node.js, Express, Flask, and FastAPI, combined with backend databases and cloud architecture. I am passionate about autonomous AI agents, intelligent revenue & automation systems, and high-performance software engineering, continuously building impactful real-world applications.",
   "links": {
     "github": "https://github.com/SHIV24116",
     "linkedin": "https://www.linkedin.com/in/shivendra-singh-93631b324",
     "instagram": "https://www.instagram.com/shivendrasingh731?igsh=MWh3Y3h1ZGFjcXkyaw==",
     "email": "singhshivendra1945@gmail.com",
+    "phone": "9918859850",
     "resume": "assets/resume.pdf"
   },
-
   "skills": {
-    "programming": ["C++", "Python", "JavaScript", "DSA (C++)"],
-    "web": ["HTML", "CSS", "Tailwind CSS", "JavaScript","React","Node.js","Express.js","MongoDB","Mongoose"],
-    "ai_ml": ["OpenCV", "NumPy", "Pandas", "Matplotlib", "Basic ML"],
-    "tools": ["Git", "GitHub","VS Code", "MATLAB", "Simulink"],
-    "ece": ["Arduino", "ESP Modules"]
+    "software_engineering": ["C++", "Python", "JavaScript", "DSA (C++)", "SQL", "OOP", "System Design"],
+    "web_development": ["React", "Next.js", "Node.js", "Express.js", "FastAPI", "Flask", "Tailwind CSS", "HTML5", "CSS3", "Appwrite"],
+    "ai_and_ml": ["AI Agents", "FastAPI AI Orchestration", "Python ML", "NumPy", "Pandas", "Scikit-Learn"],
+    "databases_and_tools": ["MongoDB", "SQLAlchemy", "Git", "GitHub", "Docker", "VS Code", "Postman", "Vercel", "Render"]
   },
-
   "projects": [
     {
-      "title": "My Portfolio Webpage",
-      "description": "Built a responsive and dynamic portfolio website with modular architecture, enabling easy content updates and showcasing projects, skills, and achievements using modern frontend technologies.",
-      "tech": ["HTML", "Tailwind CSS", "Javascript"],
-      "link": "https://github.com/SHIV24116/My-Portfolio-Webpage"
+      "id": "proj_1",
+      "title": "RazorGrow — Autonomous Merchant Growth Agent",
+      "description": "An AI-powered autonomous agent built for Razorpay Ideathon Track 01 that continuously detects checkout revenue leaks, diagnoses multi-factor causes, executes policy-bounded actions (Razorpay Payment Links & HMAC Webhooks), and tracks recovered ROI with an immutable audit ledger.",
+      "tech": ["Next.js 16", "FastAPI", "Python", "Razorpay APIs", "Tailwind CSS", "SQLAlchemy", "Vercel", "Render"],
+      "link": "https://github.com/SHIV24116/RazorpayIdeathon",
+      "featured": true
     },
     {
-      "title": "MegaBlog",
-      "description": "A full-stack blogging platform that enables users to create, edit, publish, and manage blogs with rich-text formatting and featured image support. The application includes secure authentication, state management, responsive UI, and cloud-based backend services for seamless content management.",
-      "tech": ["React", "Redux Toolkit", "JavaScript", "Tailwind CSS", "Appwrite", "TinyMCE"],
-      "link": "https://github.com/SHIV24116/Learning_React/tree/main/12MegaProject"
+      "id": "proj_2",
+      "title": "Quick Teams Web Application",
+      "description": "A full-stack team building platform for hackathons and events featuring skill-based candidate matching algorithms, interactive skill token tags, member management, and connection request workflows.",
+      "tech": ["HTML5", "Tailwind CSS", "JavaScript", "Flask", "SQLAlchemy", "REST API"],
+      "link": "https://github.com/SHIV24116/Quick-Teams-web-app",
+      "featured": true
     },
     {
-      "title": "Radar-Based Motion Detection & Object Classification System",
-      "description": "An intelligent radar-based system designed to detect motion, estimate object distance and speed, and classify moving objects using machine learning techniques. The system processes radar signals, extracts meaningful features, and performs real-time object classification for surveillance and smart sensing applications.",
-      "tech": ["Python", "Machine Learning", "CDM324 radar sensor", "ESP32", "Radar Signal Processing"],
-      "link": "https://github.com/SHIV24116/ML-based-Radar-System"
+      "id": "proj_3",
+      "title": "Time & Attendance Management System",
+      "description": "An enterprise-grade full-stack web application for tracking employee attendance, shifts, leave requests, and automated monthly reporting with role-based access control.",
+      "tech": ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
+      "link": "https://github.com/SHIV24116/Time-and-Attendance-Management-System",
+      "featured": true
     },
     {
+      "id": "proj_4",
+      "title": "Video Tube",
+      "description": "A comprehensive full-stack video hosting and streaming web application featuring video processing, cloud storage integration, user authentication, channel subscriptions, likes, comments, and playlist management.",
+      "tech": ["React", "Node.js", "Express.js", "MongoDB", "Cloudinary", "JWT", "Tailwind CSS"],
+      "link": "https://github.com/SHIV24116/Learning_Backend",
+      "featured": true
+    },
+    {
+      "id": "proj_5",
+      "title": "TransitOps",
+      "description": "An intelligent public transit operations management system featuring route optimization, live vehicle tracking metrics, schedule management, and operational performance analytics.",
+      "tech": ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
+      "link": "https://github.com/SHIV24116/TransitOps",
+      "featured": false
+    },
+    {
+      "id": "proj_6",
+      "title": "ML-Based Radar Motion & Classification System",
+      "description": "An intelligent radar sensing system using ESP32 hardware and CDM324 sensor for real-time motion detection, object distance and speed estimation, and machine learning signal classification.",
+      "tech": ["Python", "Machine Learning", "CDM324 Radar", "ESP32", "Signal Processing"],
+      "link": "https://github.com/SHIV24116/ML-based-Radar-System",
+      "featured": false
+    },
+    {
+      "id": "proj_7",
       "title": "AI Posture Guide",
-      "description": "AI Posture Guide is a real-time computer vision system that detects and analyzes human posture using a camera feed. It identifies incorrect postures such as slouching and neck bending and provides instant feedback to help users maintain proper posture.",
-      "tech": ["Python", "Open CV", "MediaPipe Pose" ,"Scikit-Learn","Numpy","Pandas"],
-      "link": "https://github.com/SHIV24116/AI-ML-project-1"
+      "description": "A real-time computer vision system that monitors human posture via camera feed, detects slouching and neck angle defects, and provides instant interactive visual feedback.",
+      "tech": ["Python", "OpenCV", "MediaPipe Pose", "Scikit-Learn", "NumPy", "Pandas"],
+      "link": "https://github.com/SHIV24116/AI-ML-project-1",
+      "featured": false
     },
     {
-      "title": "Quick Teams Webapp",
-      "description": "Quick Teams is a web application designed to help hackathon participants quickly find and form ideal teams using skill-based matching. It enables users to create profiles, manage availability, send connection requests, and automatically form team groups, providing a smooth and clutter-free collaboration experience for events and hackathons.",
-      "tech": ["HTML", "CSS", "Javascript","Flask","SQLAlchemy"],
-      "link": "https://github.com/SHIV24116/Quick-Teams-web-app"
-    },
-    {
-      "title": "Amazon Homepage Clone",
-      "description": "A frontend-only clone of the Amazon website, created as one of my starting projects in my frontend journey trying and testing my HTML and CSS skills .This project focuses on layout, styling, and visual structure — no backend or real functionality.",
-      "tech": ["HTML", "CSS"],
-      "link": "https://github.com/SHIV24116/Amazon-homepage-clone"
+      "id": "proj_8",
+      "title": "MegaBlog",
+      "description": "A full-stack blogging platform enabling users to create, edit, publish, and manage rich-text articles with featured images, state management, and cloud backend authentication.",
+      "tech": ["React", "Redux Toolkit", "JavaScript", "Tailwind CSS", "Appwrite", "TinyMCE"],
+      "link": "https://github.com/SHIV24116/Learning_React/tree/main/12MegaProject",
+      "featured": false
     }
   ],
-
+  "competitiveProgramming": {
+    "summary": "I actively practice Data Structures & Algorithms and compete in global online coding contests.",
+    "totalProblemsSolved": "800+",
+    "totalContests": "75+",
+    "platforms": [
+      {
+        "name": "LeetCode",
+        "link": "https://leetcode.com/u/CeMWZ8BV96/",
+        "maxRating": "1608"
+      },
+      {
+        "name": "Codeforces",
+        "link": "https://codeforces.com/profile/singhshivendra1945",
+        "maxRating": "1316"
+      },
+      {
+        "name": "CodeChef",
+        "link": "https://www.codechef.com/users/band_mellow_74",
+        "maxRating": "1509 ⭐⭐"
+      }
+    ]
+  },
+  "achievements": [
+    {
+      "id": "ach_1",
+      "title": "Razorpay Ideathon Track 01 Submission",
+      "description": "Engineered RazorGrow, an autonomous merchant revenue recovery agent with policy safety bounds & live HMAC webhooks.",
+      "year": "2026",
+      "icon": "🏆"
+    },
+    {
+      "id": "ach_2",
+      "title": "800+ Data Structures & Algorithms Solved",
+      "description": "Consistently solved 800+ computational problems across LeetCode, Codeforces, and CodeChef using C++.",
+      "year": "2025 – Present",
+      "icon": "⚡"
+    }
+  ],
   "education": {
     "degree": "B.Tech in Electronics & Communication Engineering",
     "college": "IIITDM Jabalpur",
     "duration": "2024 – 2028"
-  },
-  "competitiveProgramming": {
-    "summary": "I actively practice Data Structures & Algorithms and participate in online coding contests.",
-    "totalProblemsSolved": "600+",
-    "totalContests": "60+",
-    "platforms": [
-    {
-      "name": "LeetCode",
-      "link": "https://leetcode.com/u/CeMWZ8BV96/",
-      "maxRating": "1608"
-    },
-    {
-      "name": "Codeforces",
-      "link": "https://codeforces.com/profile/singhshivendra1945",
-      "maxRating": "1316"
-    },
-    {
-      "name": "CodeChef",
-      "link": "https://www.codechef.com/users/band_mellow_74",
-      "maxRating": "1509 ⭐⭐"
-    }
-  ]
   }
-
-
 }

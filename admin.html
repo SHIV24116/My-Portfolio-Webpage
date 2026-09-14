@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin CMS | Shivendra Singh Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body class="bg-[#020617] bg-[radial-gradient(#1e293b_1px,transparent_1px)] bg-[size:24px_24px] text-gray-100 font-sans min-h-screen pb-16">
+
+<!-- ================= PASSWORD AUTHENTICATION MODAL ================= -->
+<div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4">
+  <div class="bg-gray-900 border border-blue-500/50 rounded-2xl p-8 max-w-md w-full shadow-2xl shadow-blue-500/20 text-center">
+    <div class="w-16 h-16 bg-blue-600/20 border border-blue-500/40 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+      🔒
+    </div>
+    <h2 class="text-2xl font-bold text-white mb-2">Admin Portal Access</h2>
+    <p class="text-gray-400 text-sm mb-6">Enter your admin password to edit portfolio content.</p>
+    
+    <form id="auth-form" onsubmit="handleAdminLogin(event)">
+      <div class="mb-4">
+        <input 
+          type="password" 
+          id="admin-password" 
+          placeholder="Enter password..." 
+          class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-blue-500 transition"
+          required
+        />
+      </div>
+      <p id="auth-error" class="text-red-400 text-xs mb-4 hidden">❌ Incorrect password. Please try again.</p>
+      <button 
+        type="submit" 
+        class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition shadow-lg shadow-blue-600/30">
+        Unlock CMS Dashboard
+      </button>
+    </form>
+    <div class="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-500 text-center">
+      <a href="index.html" class="text-gray-400 hover:text-white underline">← Back to Main Website</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MAIN CMS DASHBOARD ================= -->
+<div id="cms-dashboard" class="hidden">
+  
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-40 bg-gray-900/90 backdrop-blur border-b border-gray-800 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">⚙️</span>
+        <div>
+          <h1 class="text-xl font-bold text-white tracking-tight">Portfolio Admin CMS</h1>
+          <p class="text-xs text-gray-400">Content Management & Live Editor</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <button onclick="saveChanges()" class="px-4 py-2 bg-green-600 hover:bg-green-500 text-white font-medium text-sm rounded-lg transition shadow-md shadow-green-600/20 flex items-center gap-2">
+          <span>💾</span> Save Changes
+        </button>
+        <button onclick="exportJSON()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm rounded-lg transition shadow-md shadow-blue-600/20 flex items-center gap-2" title="Download updated data.json for GitHub Pages">
+          <span>📥</span> Export data.json
+        </button>
+        <label class="px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-200 font-medium text-sm rounded-lg transition cursor-pointer flex items-center gap-2">
+          <span>📤</span> Import JSON
+          <input type="file" accept=".json" onchange="importJSON(event)" class="hidden" />
+        </label>
+        <a href="index.html" target="_blank" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-blue-400 font-medium text-sm rounded-lg transition flex items-center gap-2">
+          <span>👁️</span> Live Preview
+        </a>
+        <button onclick="logoutAdmin()" class="px-3 py-2 bg-red-950/60 hover:bg-red-900 border border-red-800 text-red-300 text-sm rounded-lg transition">
+          🔒 Lock
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- NOTIFICATION TOAST -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-green-600 text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 transition-all duration-300 opacity-0 pointer-events-none transform translate-y-4">
+    <span class="text-xl">✅</span>
+    <span id="toast-message">Changes saved successfully!</span>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-6 pt-8">
+    
+    <!-- NAVIGATION TABS -->
+    <div class="flex flex-wrap gap-2 border-b border-gray-800 pb-4 mb-8">
+      <button onclick="switchTab('basic')" id="tab-btn-basic" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-blue-600 text-white">
+        👤 Basic & Contact Info
+      </button>
+      <button onclick="switchTab('projects')" id="tab-btn-projects" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-gray-800 text-gray-300 hover:text-white">
+        🚀 Projects CRUD
+      </button>
+      <button onclick="switchTab('skills')" id="tab-btn-skills" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-gray-800 text-gray-300 hover:text-white">
+        🛠️ Skills Manager
+      </button>
+      <button onclick="switchTab('achievements')" id="tab-btn-achievements" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-gray-800 text-gray-300 hover:text-white">
+        🏆 Achievements & CP Ratings
+      </button>
+      <button onclick="switchTab('education')" id="tab-btn-education" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-gray-800 text-gray-300 hover:text-white">
+        🎓 Education
+      </button>
+      <button onclick="switchTab('settings')" id="tab-btn-settings" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-gray-800 text-gray-300 hover:text-white">
+        🔑 Admin Password
+      </button>
+    </div>
+
+    <!-- ================= TAB 1: BASIC & CONTACT INFO ================= -->
+    <div id="tab-basic" class="tab-content active space-y-6">
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+        <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+          <span>👤</span> Personal & Hero Information
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Display Name</label>
+            <input type="text" id="edit-name" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Professional Title</label>
+            <input type="text" id="edit-title" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-300 mb-2">Tagline (Hero subtitle)</label>
+          <input type="text" id="edit-tagline" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500 focus:outline-none">
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-300 mb-2">About Me Description</label>
+          <textarea id="edit-about" rows="5" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500 focus:outline-none leading-relaxed"></textarea>
+        </div>
+
+        <!-- PROFILE PHOTO UPLOAD / URL -->
+        <div class="mb-6 bg-gray-800/60 border border-gray-700/60 rounded-xl p-5">
+          <label class="block text-sm font-medium text-gray-200 mb-3">Profile Photo</label>
+          <div class="flex flex-col sm:flex-row items-center gap-6">
+            <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-500 shrink-0">
+              <img id="edit-photo-preview" src="assets/profilephoto.jpeg" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 space-y-3 w-full">
+              <div>
+                <label class="block text-xs text-gray-400 mb-1">Image URL</label>
+                <input type="text" id="edit-photo-url" oninput="previewPhotoUrl(this.value)" class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none">
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-xs text-gray-400">OR Upload File:</span>
+                <input type="file" accept="image/*" onchange="handlePhotoUpload(event)" class="text-xs text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500 cursor-pointer">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUME MANAGER CARD -->
+        <div class="mb-6 bg-gray-800/80 border border-blue-500/40 rounded-xl p-5 shadow-lg">
+          <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+            <span>📄</span> Resume PDF Manager
+          </h3>
+          <p class="text-xs text-gray-300 mb-4 leading-relaxed">
+            Update your resume link or upload a new PDF file. Clicking your website's <strong>Resume</strong> button will open this file.
+          </p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">Resume Link / File Path</label>
+              <input type="text" id="edit-resume" class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">Upload New Resume (.pdf)</label>
+              <input type="file" accept=".pdf" onchange="handleResumeUpload(event)" class="w-full text-xs text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500 cursor-pointer">
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-gray-700/60 text-xs text-blue-300 bg-blue-950/40 p-3 rounded-lg flex items-start gap-2">
+            <span class="text-base">💡</span>
+            <div>
+              <strong>How to replace your PDF file permanently for GitHub Pages:</strong><br/>
+              Simply place your new PDF file into the local <code>Portfolio/assets/</code> folder named <code>resume.pdf</code> (overwriting the old file), then commit and push to GitHub!
+            </div>
+          </div>
+        </div>
+
+        <!-- SOCIAL LINKS -->
+        <h3 class="text-lg font-semibold text-white mb-4 pt-4 border-t border-gray-800 flex items-center gap-2">
+          <span>🔗</span> Social & Contact Links
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">GitHub URL</label>
+            <input type="text" id="edit-github" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">LinkedIn URL</label>
+            <input type="text" id="edit-linkedin" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Instagram URL</label>
+            <input type="text" id="edit-instagram" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Email Address</label>
+            <input type="email" id="edit-email" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Phone Number</label>
+            <input type="text" id="edit-phone" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500 focus:outline-none">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 2: PROJECTS CRUD ================= -->
+    <div id="tab-projects" class="tab-content space-y-6">
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>🚀</span> Manage Projects (GitHub Showcase)
+            </h2>
+            <p class="text-xs text-gray-400">Add, edit, delete, or reorder your portfolio projects.</p>
+          </div>
+          <button onclick="openNewProjectModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm rounded-xl transition shadow-md shadow-blue-600/30 flex items-center gap-1.5">
+            <span>➕</span> Add New Project
+          </button>
+        </div>
+
+        <!-- PROJECTS LIST -->
+        <div id="projects-cms-list" class="space-y-4"></div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 3: SKILLS MANAGER ================= -->
+    <div id="tab-skills" class="tab-content space-y-6">
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>🛠️</span> Categorized Skills Manager
+          </h2>
+        </div>
+        
+        <div id="skills-cms-list" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 4: ACHIEVEMENTS & CP RATINGS ================= -->
+    <div id="tab-achievements" class="tab-content space-y-6">
+      <!-- ACHIEVEMENTS -->
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>🏆</span> Achievements & Milestones
+            </h2>
+            <p class="text-xs text-gray-400">If you add achievements, the section will show on your site; if empty, it hides automatically.</p>
+          </div>
+          <button onclick="openNewAchievementModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-xl transition flex items-center gap-1">
+            <span>➕</span> Add Achievement
+          </button>
+        </div>
+        <div id="achievements-cms-list" class="space-y-4"></div>
+      </div>
+
+      <!-- COMPETITIVE PROGRAMMING -->
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+        <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+          <span>⚡</span> Competitive Programming & Platform Ratings
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">CP Summary Text</label>
+            <input type="text" id="edit-cp-summary" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Problems Solved</label>
+            <input type="text" id="edit-cp-problems" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Contests Participated</label>
+            <input type="text" id="edit-cp-contests" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:border-blue-500">
+          </div>
+        </div>
+
+        <h3 class="text-sm font-semibold text-gray-300 mb-3">Platform Ratings:</h3>
+        <div id="cp-platforms-cms" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 5: EDUCATION ================= -->
+    <div id="tab-education" class="tab-content space-y-6">
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+        <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+          <span>🎓</span> Education Details
+        </h2>
+        <div class="space-y-4 max-w-2xl">
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">Degree & Major</label>
+            <input type="text" id="edit-degree" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">College / University</label>
+            <input type="text" id="edit-college" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">Duration / Years</label>
+            <input type="text" id="edit-duration" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 6: ADMIN SECURITY ================= -->
+    <div id="tab-settings" class="tab-content space-y-6">
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-xl max-w-xl">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span>🔑</span> Security Settings
+        </h2>
+        <p class="text-xs text-gray-400 mb-6">Change your password for accessing this Admin CMS panel.</p>
+
+        <form onsubmit="changeAdminPassword(event)">
+          <div class="mb-4">
+            <label class="block text-xs text-gray-400 mb-1">Current Password</label>
+            <input type="password" id="curr-pass" required class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+          </div>
+          <div class="mb-6">
+            <label class="block text-xs text-gray-400 mb-1">New Password</label>
+            <input type="password" id="new-pass" required minlength="4" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+          </div>
+          <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm rounded-xl transition">
+            Update Admin Password
+          </button>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-gray-800">
+          <h3 class="text-sm font-semibold text-red-400 mb-2">Reset All Data to Defaults</h3>
+          <p class="text-xs text-gray-400 mb-4">Clears browser localStorage overrides and restores original `data.json` content.</p>
+          <button onclick="confirmResetDefaults()" class="px-4 py-2 bg-red-950 hover:bg-red-900 border border-red-800 text-red-300 text-xs rounded-lg transition">
+            ⚠️ Reset to Default JSON
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ================= PROJECT EDIT / ADD MODAL ================= -->
+<div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4 hidden">
+  <div class="bg-gray-900 border border-blue-500/40 rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl overflow-y-auto max-h-[90vh]">
+    <div class="flex items-center justify-between mb-6">
+      <h3 id="modal-project-title" class="text-xl font-bold text-white">Add Project</h3>
+      <button onclick="closeProjectModal()" class="text-gray-400 hover:text-white text-2xl font-bold">&times;</button>
+    </div>
+    
+    <input type="hidden" id="proj-edit-index" value="-1">
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">Project Title</label>
+        <input type="text" id="proj-title" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+      </div>
+
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">Description</label>
+        <textarea id="proj-desc" rows="3" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">Tech Stack (comma separated, e.g. React, Node.js, Tailwind)</label>
+        <input type="text" id="proj-tech" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+      </div>
+
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">GitHub / Project Link</label>
+        <input type="text" id="proj-link" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+      </div>
+
+      <div class="flex items-center gap-2 pt-2">
+        <input type="checkbox" id="proj-featured" class="w-4 h-4 text-blue-600 rounded bg-gray-800 border-gray-700 focus:ring-blue-500">
+        <label for="proj-featured" class="text-sm text-gray-300 font-medium">Highlight as Featured Project</label>
+      </div>
+    </div>
+
+    <div class="mt-8 flex justify-end gap-3">
+      <button onclick="closeProjectModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 text-sm rounded-xl transition">Cancel</button>
+      <button onclick="saveProjectFromModal()" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm rounded-xl transition shadow-md shadow-blue-600/30">Save Project</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ACHIEVEMENT EDIT / ADD MODAL ================= -->
+<div id="achievement-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4 hidden">
+  <div class="bg-gray-900 border border-blue-500/40 rounded-2xl p-6 sm:p-8 max-w-xl w-full shadow-2xl">
+    <div class="flex items-center justify-between mb-6">
+      <h3 id="modal-achievement-title" class="text-xl font-bold text-white">Add Achievement</h3>
+      <button onclick="closeAchievementModal()" class="text-gray-400 hover:text-white text-2xl font-bold">&times;</button>
+    </div>
+    
+    <input type="hidden" id="ach-edit-index" value="-1">
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">Achievement Title</label>
+        <input type="text" id="ach-title" placeholder="e.g. Razorpay Ideathon Winner" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+      </div>
+
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">Description</label>
+        <textarea id="ach-desc" rows="3" placeholder="Brief description..." class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500"></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Year / Period</label>
+          <input type="text" id="ach-year" placeholder="e.g. 2026" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Emoji Icon</label>
+          <input type="text" id="ach-icon" placeholder="🏆, ⚡, ⭐, 🥇" class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-blue-500">
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex justify-end gap-3">
+      <button onclick="closeAchievementModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 text-sm rounded-xl transition">Cancel</button>
+      <button onclick="saveAchievementFromModal()" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm rounded-xl transition shadow-md shadow-blue-600/30">Save Achievement</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= DELETE CONFIRMATION MODAL ================= -->
+<div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4 hidden">
+  <div class="bg-gray-900 border border-red-500/40 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center">
+    <div class="w-16 h-16 bg-red-600/20 border border-red-500/40 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+      ⚠️
+    </div>
+    <h3 id="confirm-modal-title" class="text-xl font-bold text-white mb-2">Are you sure?</h3>
+    <p id="confirm-modal-msg" class="text-gray-400 text-sm mb-6">This action will remove the selected item.</p>
+
+    <div class="flex justify-center gap-4">
+      <button onclick="closeConfirmModal()" class="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium text-sm rounded-xl transition">Cancel</button>
+      <button id="confirm-action-btn" class="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-semibold text-sm rounded-xl transition shadow-lg shadow-red-600/30">Confirm Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CMS JAVASCRIPT LOGIC ================= -->
+<script>
+  let portfolioData = null;
+  let confirmCallback = null;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if (sessionStorage.getItem("admin_unlocked") === "true") {
+      unlockDashboard();
+    }
+  });
+
+  function getStoredPassword() {
+    return localStorage.getItem("admin_password") || "admin123";
+  }
+
+  function handleAdminLogin(e) {
+    e.preventDefault();
+    const inputPass = document.getElementById("admin-password").value;
+    if (inputPass === getStoredPassword()) {
+      sessionStorage.setItem("admin_unlocked", "true");
+      unlockDashboard();
+    } else {
+      document.getElementById("auth-error").classList.remove("hidden");
+    }
+  }
+
+  function logoutAdmin() {
+    sessionStorage.removeItem("admin_unlocked");
+    window.location.reload();
+  }
+
+  function unlockDashboard() {
+    document.getElementById("auth-modal").classList.add("hidden");
+    document.getElementById("cms-dashboard").classList.remove("hidden");
+    loadData();
+  }
+
+  function loadData() {
+    const localData = localStorage.getItem("portfolio_data");
+    if (localData) {
+      try {
+        portfolioData = JSON.parse(localData);
+        populateForms();
+      } catch (err) {
+        fetchDefaultData();
+      }
+    } else {
+      fetchDefaultData();
+    }
+  }
+
+  function fetchDefaultData() {
+    fetch("data.json")
+      .then(res => res.json())
+      .then(data => {
+        portfolioData = data;
+        populateForms();
+      })
+      .catch(err => console.error("Error fetching data.json:", err));
+  }
+
+  function populateForms() {
+    if (!portfolioData) return;
+
+    // Basic
+    document.getElementById("edit-name").value = portfolioData.name || "";
+    document.getElementById("edit-title").value = portfolioData.title || "";
+    document.getElementById("edit-tagline").value = portfolioData.tagline || "";
+    document.getElementById("edit-about").value = portfolioData.about || "";
+    document.getElementById("edit-photo-url").value = portfolioData.profilePhoto || "";
+    if (portfolioData.profilePhoto) {
+      document.getElementById("edit-photo-preview").src = portfolioData.profilePhoto;
+    }
+
+    // Links & Resume
+    if (portfolioData.links) {
+      document.getElementById("edit-github").value = portfolioData.links.github || "";
+      document.getElementById("edit-linkedin").value = portfolioData.links.linkedin || "";
+      document.getElementById("edit-instagram").value = portfolioData.links.instagram || "";
+      document.getElementById("edit-email").value = portfolioData.links.email || "";
+      document.getElementById("edit-phone").value = portfolioData.links.phone || "";
+      document.getElementById("edit-resume").value = portfolioData.links.resume || "";
+    }
+
+    // Projects
+    renderProjectsList();
+
+    // Skills
+    renderSkillsList();
+
+    // Achievements & CP
+    renderAchievementsList();
+    if (portfolioData.competitiveProgramming) {
+      document.getElementById("edit-cp-summary").value = portfolioData.competitiveProgramming.summary || "";
+      document.getElementById("edit-cp-problems").value = portfolioData.competitiveProgramming.totalProblemsSolved || "";
+      document.getElementById("edit-cp-contests").value = portfolioData.competitiveProgramming.totalContests || "";
+      renderCpPlatforms();
+    }
+
+    // Education
+    if (portfolioData.education) {
+      document.getElementById("edit-degree").value = portfolioData.education.degree || "";
+      document.getElementById("edit-college").value = portfolioData.education.college || "";
+      document.getElementById("edit-duration").value = portfolioData.education.duration || "";
+    }
+  }
+
+  function syncFormDataToState() {
+    if (!portfolioData) portfolioData = {};
+    portfolioData.name = document.getElementById("edit-name").value;
+    portfolioData.title = document.getElementById("edit-title").value;
+    portfolioData.tagline = document.getElementById("edit-tagline").value;
+    portfolioData.about = document.getElementById("edit-about").value;
+    portfolioData.profilePhoto = document.getElementById("edit-photo-url").value;
+
+    if (!portfolioData.links) portfolioData.links = {};
+    portfolioData.links.github = document.getElementById("edit-github").value;
+    portfolioData.links.linkedin = document.getElementById("edit-linkedin").value;
+    portfolioData.links.instagram = document.getElementById("edit-instagram").value;
+    portfolioData.links.email = document.getElementById("edit-email").value;
+    portfolioData.links.phone = document.getElementById("edit-phone").value;
+    portfolioData.links.resume = document.getElementById("edit-resume").value;
+
+    if (!portfolioData.competitiveProgramming) portfolioData.competitiveProgramming = {};
+    portfolioData.competitiveProgramming.summary = document.getElementById("edit-cp-summary").value;
+    portfolioData.competitiveProgramming.totalProblemsSolved = document.getElementById("edit-cp-problems").value;
+    portfolioData.competitiveProgramming.totalContests = document.getElementById("edit-cp-contests").value;
+
+    if (!portfolioData.education) portfolioData.education = {};
+    portfolioData.education.degree = document.getElementById("edit-degree").value;
+    portfolioData.education.college = document.getElementById("edit-college").value;
+    portfolioData.education.duration = document.getElementById("edit-duration").value;
+  }
+
+  function saveChanges() {
+    syncFormDataToState();
+    localStorage.setItem("portfolio_data", JSON.stringify(portfolioData, null, 2));
+    showToast("Changes saved successfully!");
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById("toast");
+    document.getElementById("toast-message").textContent = msg;
+    toast.classList.remove("opacity-0", "pointer-events-none", "translate-y-4");
+    setTimeout(() => {
+      toast.classList.add("opacity-0", "pointer-events-none", "translate-y-4");
+    }, 2500);
+  }
+
+  function exportJSON() {
+    syncFormDataToState();
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(portfolioData, null, 2));
+    const dlAnchorElem = document.createElement("a");
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "data.json");
+    dlAnchorElem.click();
+    showToast("Downloaded data.json file!");
+  }
+
+  function importJSON(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        const imported = JSON.parse(evt.target.result);
+        portfolioData = imported;
+        saveChanges();
+        populateForms();
+        showToast("JSON imported successfully!");
+      } catch (err) {
+        alert("Invalid JSON file format!");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function confirmResetDefaults() {
+    openConfirmModal("Reset Portfolio to Defaults", "This will clear browser overrides and restore default data.json.", () => {
+      localStorage.removeItem("portfolio_data");
+      fetchDefaultData();
+      showToast("Reset to default data!");
+    });
+  }
+
+  /* ================= TABS ================= */
+  function switchTab(tabId) {
+    document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.classList.remove("bg-blue-600", "text-white");
+      btn.classList.add("bg-gray-800", "text-gray-300");
+    });
+
+    document.getElementById(`tab-${tabId}`).classList.add("active");
+    const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+    if (activeBtn) {
+      activeBtn.classList.remove("bg-gray-800", "text-gray-300");
+      activeBtn.classList.add("bg-blue-600", "text-white");
+    }
+  }
+
+  /* ================= PHOTO & RESUME UPLOAD ================= */
+  function previewPhotoUrl(url) {
+    document.getElementById("edit-photo-preview").src = url;
+  }
+
+  function handlePhotoUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const base64Url = evt.target.result;
+      document.getElementById("edit-photo-url").value = base64Url;
+      document.getElementById("edit-photo-preview").src = base64Url;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleResumeUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const base64Url = evt.target.result;
+      document.getElementById("edit-resume").value = base64Url;
+      showToast(`Uploaded ${file.name}! Save changes to preview.`);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ================= CONFIRM MODAL ================= */
+  function openConfirmModal(title, msg, onConfirm) {
+    document.getElementById("confirm-modal-title").textContent = title;
+    document.getElementById("confirm-modal-msg").textContent = msg;
+    confirmCallback = onConfirm;
+    document.getElementById("confirm-modal").classList.remove("hidden");
+  }
+
+  function closeConfirmModal() {
+    document.getElementById("confirm-modal").classList.add("hidden");
+    confirmCallback = null;
+  }
+
+  document.getElementById("confirm-action-btn").addEventListener("click", () => {
+    if (confirmCallback) confirmCallback();
+    closeConfirmModal();
+  });
+
+  /* ================= PROJECTS CRUD ================= */
+  function renderProjectsList() {
+    const container = document.getElementById("projects-cms-list");
+    if (!container || !portfolioData.projects) return;
+    container.innerHTML = "";
+
+    portfolioData.projects.forEach((proj, idx) => {
+      const card = document.createElement("div");
+      card.className = "bg-gray-800/80 border border-gray-700/80 rounded-xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4";
+      card.innerHTML = `
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1">
+            <h4 class="text-lg font-bold text-white">${proj.title}</h4>
+            ${proj.featured ? '<span class="px-2 py-0.5 bg-blue-500/20 text-blue-300 border border-blue-500/40 text-xs rounded-md">Featured</span>' : ''}
+          </div>
+          <p class="text-xs text-gray-400 line-clamp-2 mb-2">${proj.description}</p>
+          <p class="text-xs text-blue-400 font-mono">Tech: ${Array.isArray(proj.tech) ? proj.tech.join(", ") : proj.tech}</p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="moveProject(${idx}, -1)" ${idx === 0 ? "disabled class='opacity-30 p-2'" : "class='p-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white text-xs'"} title="Move Up">▲</button>
+          <button onclick="moveProject(${idx}, 1)" ${idx === portfolioData.projects.length - 1 ? "disabled class='opacity-30 p-2'" : "class='p-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white text-xs'"} title="Move Down">▼</button>
+          <button onclick="openEditProjectModal(${idx})" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-lg">Edit</button>
+          <button onclick="promptDeleteProject(${idx})" class="px-3 py-1.5 bg-red-950 hover:bg-red-900 border border-red-800 text-red-300 text-xs rounded-lg">Delete</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function openNewProjectModal() {
+    document.getElementById("modal-project-title").textContent = "Add New Project";
+    document.getElementById("proj-edit-index").value = "-1";
+    document.getElementById("proj-title").value = "";
+    document.getElementById("proj-desc").value = "";
+    document.getElementById("proj-tech").value = "";
+    document.getElementById("proj-link").value = "";
+    document.getElementById("proj-featured").checked = false;
+    document.getElementById("project-modal").classList.remove("hidden");
+  }
+
+  function openEditProjectModal(idx) {
+    const proj = portfolioData.projects[idx];
+    if (!proj) return;
+    document.getElementById("modal-project-title").textContent = "Edit Project";
+    document.getElementById("proj-edit-index").value = idx;
+    document.getElementById("proj-title").value = proj.title || "";
+    document.getElementById("proj-desc").value = proj.description || "";
+    document.getElementById("proj-tech").value = Array.isArray(proj.tech) ? proj.tech.join(", ") : proj.tech || "";
+    document.getElementById("proj-link").value = proj.link || "";
+    document.getElementById("proj-featured").checked = !!proj.featured;
+    document.getElementById("project-modal").classList.remove("hidden");
+  }
+
+  function closeProjectModal() {
+    document.getElementById("project-modal").classList.add("hidden");
+  }
+
+  function saveProjectFromModal() {
+    const idx = parseInt(document.getElementById("proj-edit-index").value);
+    const title = document.getElementById("proj-title").value.trim();
+    const desc = document.getElementById("proj-desc").value.trim();
+    const techStr = document.getElementById("proj-tech").value.trim();
+    const link = document.getElementById("proj-link").value.trim();
+    const featured = document.getElementById("proj-featured").checked;
+
+    if (!title) {
+      alert("Please enter a project title!");
+      return;
+    }
+
+    const techArray = techStr.split(",").map(t => t.trim()).filter(Boolean);
+
+    const projObj = {
+      title,
+      description: desc,
+      tech: techArray,
+      link: link || "#",
+      featured
+    };
+
+    if (idx >= 0) {
+      portfolioData.projects[idx] = projObj;
+    } else {
+      portfolioData.projects.push(projObj);
+    }
+
+    closeProjectModal();
+    renderProjectsList();
+    saveChanges();
+  }
+
+  function promptDeleteProject(idx) {
+    const proj = portfolioData.projects[idx];
+    openConfirmModal("Delete Project", `Delete "${proj ? proj.title : 'this project'}"?`, () => {
+      portfolioData.projects.splice(idx, 1);
+      renderProjectsList();
+      saveChanges();
+    });
+  }
+
+  function moveProject(idx, dir) {
+    const newIdx = idx + dir;
+    if (newIdx < 0 || newIdx >= portfolioData.projects.length) return;
+    const temp = portfolioData.projects[idx];
+    portfolioData.projects[idx] = portfolioData.projects[newIdx];
+    portfolioData.projects[newIdx] = temp;
+    renderProjectsList();
+    saveChanges();
+  }
+
+  /* ================= SKILLS MANAGER ================= */
+  function renderSkillsList() {
+    const container = document.getElementById("skills-cms-list");
+    if (!container || !portfolioData.skills) return;
+    container.innerHTML = "";
+
+    for (const catKey in portfolioData.skills) {
+      const skillsArr = portfolioData.skills[catKey];
+      const card = document.createElement("div");
+      card.className = "bg-gray-800/80 border border-gray-700/80 rounded-xl p-5 space-y-4";
+      card.innerHTML = `
+        <div class="flex items-center justify-between border-b border-gray-700 pb-2">
+          <h4 class="font-bold text-white text-base capitalize">${catKey.replace(/_/g, " ")}</h4>
+          <button onclick="promptDeleteSkillCategory('${catKey}')" class="text-xs text-red-400 hover:underline">Remove Category</button>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          ${skillsArr.map((s, sIdx) => `
+            <span class="px-3 py-1 bg-gray-900 border border-gray-700 rounded-lg text-xs text-gray-200 flex items-center gap-2">
+              ${s}
+              <button onclick="removeSkillTag('${catKey}', ${sIdx})" class="text-gray-400 hover:text-red-400 font-bold">&times;</button>
+            </span>
+          `).join("")}
+        </div>
+        <div class="flex gap-2 pt-2">
+          <input type="text" id="add-skill-input-${catKey}" placeholder="Add skill tag..." class="flex-1 px-3 py-1.5 bg-gray-900 border border-gray-700 rounded-lg text-xs text-white focus:border-blue-500">
+          <button onclick="addSkillTag('${catKey}')" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-lg">+ Add</button>
+        </div>
+      `;
+      container.appendChild(card);
+    }
+  }
+
+  function addSkillTag(catKey) {
+    const input = document.getElementById(`add-skill-input-${catKey}`);
+    const val = input.value.trim();
+    if (!val) return;
+    if (!portfolioData.skills[catKey]) portfolioData.skills[catKey] = [];
+    portfolioData.skills[catKey].push(val);
+    input.value = "";
+    renderSkillsList();
+    saveChanges();
+  }
+
+  function removeSkillTag(catKey, idx) {
+    if (portfolioData.skills[catKey]) {
+      portfolioData.skills[catKey].splice(idx, 1);
+      renderSkillsList();
+      saveChanges();
+    }
+  }
+
+  function promptDeleteSkillCategory(catKey) {
+    openConfirmModal("Delete Skill Category", `Remove skill category "${catKey.replace(/_/g, " ")}"?`, () => {
+      delete portfolioData.skills[catKey];
+      renderSkillsList();
+      saveChanges();
+    });
+  }
+
+  /* ================= ACHIEVEMENTS CRUD & MODAL ================= */
+  function renderAchievementsList() {
+    const container = document.getElementById("achievements-cms-list");
+    if (!container) return;
+    container.innerHTML = "";
+
+    if (!portfolioData.achievements || portfolioData.achievements.length === 0) {
+      container.innerHTML = `
+        <div class="bg-gray-800/40 border border-gray-700/60 rounded-xl p-8 text-center text-gray-400 text-sm">
+          No achievements currently added. The Achievements section will be hidden on your main portfolio site.
+        </div>
+      `;
+      return;
+    }
+
+    portfolioData.achievements.forEach((ach, idx) => {
+      const card = document.createElement("div");
+      card.className = "bg-gray-800/80 border border-gray-700/80 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4";
+      card.innerHTML = `
+        <div class="flex items-start gap-3">
+          <span class="text-2xl">${ach.icon || "🏆"}</span>
+          <div>
+            <h4 class="font-bold text-white text-base">${ach.title} <span class="text-xs text-blue-400 font-mono ml-2">(${ach.year})</span></h4>
+            <p class="text-xs text-gray-400">${ach.description}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="openEditAchievementModal(${idx})" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-lg">Edit</button>
+          <button onclick="promptDeleteAchievement(${idx})" class="px-3 py-1.5 bg-red-950 border border-red-800 text-red-300 text-xs rounded-lg">Delete</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function openNewAchievementModal() {
+    document.getElementById("modal-achievement-title").textContent = "Add New Achievement";
+    document.getElementById("ach-edit-index").value = "-1";
+    document.getElementById("ach-title").value = "";
+    document.getElementById("ach-desc").value = "";
+    document.getElementById("ach-year").value = "2026";
+    document.getElementById("ach-icon").value = "🏆";
+    document.getElementById("achievement-modal").classList.remove("hidden");
+  }
+
+  function openEditAchievementModal(idx) {
+    const ach = portfolioData.achievements[idx];
+    if (!ach) return;
+    document.getElementById("modal-achievement-title").textContent = "Edit Achievement";
+    document.getElementById("ach-edit-index").value = idx;
+    document.getElementById("ach-title").value = ach.title || "";
+    document.getElementById("ach-desc").value = ach.description || "";
+    document.getElementById("ach-year").value = ach.year || "";
+    document.getElementById("ach-icon").value = ach.icon || "🏆";
+    document.getElementById("achievement-modal").classList.remove("hidden");
+  }
+
+  function closeAchievementModal() {
+    document.getElementById("achievement-modal").classList.add("hidden");
+  }
+
+  function saveAchievementFromModal() {
+    const idx = parseInt(document.getElementById("ach-edit-index").value);
+    const title = document.getElementById("ach-title").value.trim();
+    const desc = document.getElementById("ach-desc").value.trim();
+    const year = document.getElementById("ach-year").value.trim() || "2026";
+    const icon = document.getElementById("ach-icon").value.trim() || "🏆";
+
+    if (!title) {
+      alert("Please enter an achievement title!");
+      return;
+    }
+
+    const achObj = { title, description: desc, year, icon };
+
+    if (!portfolioData.achievements) portfolioData.achievements = [];
+
+    if (idx >= 0) {
+      portfolioData.achievements[idx] = achObj;
+    } else {
+      portfolioData.achievements.push(achObj);
+    }
+
+    closeAchievementModal();
+    renderAchievementsList();
+    saveChanges();
+  }
+
+  function promptDeleteAchievement(idx) {
+    const ach = portfolioData.achievements[idx];
+    openConfirmModal("Delete Achievement", `Delete "${ach ? ach.title : 'this achievement'}"?`, () => {
+      portfolioData.achievements.splice(idx, 1);
+      renderAchievementsList();
+      saveChanges();
+    });
+  }
+
+  function renderCpPlatforms() {
+    const container = document.getElementById("cp-platforms-cms");
+    if (!container || !portfolioData.competitiveProgramming?.platforms) return;
+    container.innerHTML = "";
+
+    portfolioData.competitiveProgramming.platforms.forEach((p, idx) => {
+      const div = document.createElement("div");
+      div.className = "bg-gray-800 p-4 border border-gray-700 rounded-xl space-y-2";
+      div.innerHTML = `
+        <h4 class="font-bold text-white text-sm">${p.name}</h4>
+        <div>
+          <label class="block text-[10px] text-gray-400">Max Rating</label>
+          <input type="text" value="${p.maxRating || ''}" onchange="portfolioData.competitiveProgramming.platforms[${idx}].maxRating = this.value; saveChanges();" class="w-full px-2 py-1 bg-gray-900 border border-gray-700 text-xs text-white rounded">
+        </div>
+        <div>
+          <label class="block text-[10px] text-gray-400">Profile Link</label>
+          <input type="text" value="${p.link || ''}" onchange="portfolioData.competitiveProgramming.platforms[${idx}].link = this.value; saveChanges();" class="w-full px-2 py-1 bg-gray-900 border border-gray-700 text-xs text-white rounded">
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  /* ================= PASSWORD CHANGE ================= */
+  function changeAdminPassword(e) {
+    e.preventDefault();
+    const curr = document.getElementById("curr-pass").value;
+    const newP = document.getElementById("new-pass").value;
+
+    if (curr !== getStoredPassword()) {
+      alert("Current password does not match!");
+      return;
+    }
+
+    localStorage.setItem("admin_password", newP);
+    document.getElementById("curr-pass").value = "";
+    document.getElementById("new-pass").value = "";
+    showToast("Admin password changed successfully!");
+  }
+</script>
+
+</body>
+</html>
